@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="../include/style.css"/>
+</head>
+<body>
+	<canvas width="800" height="800" id="canvas"></canvas>
+	<script type="text/javascript">
+		const canvas = document.getElementById('canvas');
+		const ctx = canvas.getContext('2d');
+		const width = 800;
+		const height = 800;
+		const cx = width/2;
+		const cy = height/2;
+		const radius = 250;
+		ctx.lineCap = 'round';
+    ctx.strokeStyle = '#999';
+		function harmonograph(cx, cy, A, B, a, b, p1, p2, d1, d2, iter) {
+      const res = 0.01;
+      let t = 0;
+      for (let i = 0; t < iter; i += res) {
+        x = cx + Math.sin(a * t + p1) * A * Math.exp(-d1 * t);
+        y = cy + Math.sin(b * t + p2) * B * Math.exp(-d2 * t);
+        ctx.lineTo(x, y);
+        t += res;
+      }
+      ctx.stroke();
+    }
+		const A = 390;
+    const B = 390;
+    const a = 2;
+    const b = 2.01;
+    const p1 = 0.3;
+    const p2 = 1.7;
+    const d1 = 0.001;
+    const d2 = 0.001;
+    const iter = 10000;
+    // 注意 这个 10 万次的迭代在我的 firefox 浏览器中感觉花了10多秒才画完，绘制过程浏览器会出现假死现象。
+    // 经测试 10 万次迭代在我的 windows webkit 内核浏览器（chrome 和 edge ）上无法显示出来，需要减小 iter 值
+    
+    harmonograph(width / 2, height / 2, A, B, a, b, p1, p2, d1, d2, iter);
+	</script>
+</body>
+</html>

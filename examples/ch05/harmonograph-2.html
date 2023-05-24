@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="../include/style.css"/>
+</head>
+<body>
+	<canvas width="800" height="800" id="canvas"></canvas>
+	<script type="text/javascript">
+		const canvas = document.getElementById('canvas');
+		const ctx = canvas.getContext('2d');
+		const width = 800;
+		const height = 800;
+		const cx = width/2;
+		const cy = height/2;
+		const radius = 250;
+		ctx.lineCap = 'round';
+    ctx.strokeStyle = '#999';
+
+		function harmonograph2(cx, cy, penX, penY, papX, papY, iter) {
+      const res = 0.01
+      let t = 0.0
+      for (let i = 0; t < iter; i += res) {
+    
+        x = cx
+          + Math.sin(penX.freq * t + penX.phase) * penX.amp * Math.exp(-penX.damp * t)
+          + Math.sin(papX.freq * t + papX.phase) * papX.amp * Math.exp(-papX.damp * t)
+    
+        y = cy 
+          + Math.sin(penY.freq * t + penY.phase) * penY.amp * Math.exp(-penY.damp * t)
+          + Math.sin(papY.freq * t + papY.phase) * papY.amp * Math.exp(-papY.damp * t)
+    
+        ctx.lineTo(x, y)
+        t += res
+      }
+      ctx.stroke()
+    }
+
+    function pendulum(amp, freq, phase, damp){
+      return {
+        amp,
+        freq,
+        phase,
+        damp,
+      }
+    }
+
+		const penX = pendulum(90.0, 7.5, 1.57, 0.0001);
+    const penY = pendulum(90.0, 4.0, 0.0, 0.0001);
+    const paperX = pendulum(280.0, 1.001, 1.57, 0.0001);
+    const paperY = pendulum(280.0, 2.0, 0.0, 0.0001);
+
+    harmonograph2(width/2, height/2, penX, penY, paperX, paperY, 1000)
+	</script>
+</body>
+</html>

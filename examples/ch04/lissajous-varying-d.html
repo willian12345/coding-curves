@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="../include/style.css"/>
+</head>
+<body>
+	<canvas width="600" height="600" id="canvas"></canvas>
+	<script type="text/javascript">
+		const canvas = document.getElementById('canvas');
+		const ctx = canvas.getContext('2d');
+		const width = 600;
+		const height = 600;
+		const cx = width/2;
+		const cy = height/2;
+		const radius = 250;
+		ctx.lineCap = 'round';
+		function liss(cx, cy, A, B, a, b, d) {
+			res = 0.01
+			ctx.beginPath();
+			for (t = 0; t < 2 * Math.PI; t += res) {
+				x = cx + Math.sin(a * t + d) * A
+				y = cy + Math.sin(b * t) * B
+				ctx.lineTo(x, y)
+			}
+			ctx.closePath();
+		}
+
+		let d = 0.1;
+		function loop (){
+			d += 0.01;
+			ctx.clearRect(0,0, 600, 600);
+			liss(300, 300, 250, 250, 6, 7, d);
+			ctx.stroke();	
+			requestAnimationFrame(loop)
+		}
+
+		requestAnimationFrame(loop)
+		
+		
+	</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="../include/style.css"/>
+</head>
+<body>
+	<canvas width="800" height="500" id="canvas"></canvas>
+	<script type="text/javascript">
+		const canvas = document.getElementById('canvas');
+		const ctx = canvas.getContext('2d');
+		function sinewave (x0, y0, x1, y1, wavelength, amp){
+			const dx = x1 - x0;
+			const dy = y1 - y0;
+			const dist = Math.sqrt(dx * dx + dy * dy);
+			const angle = Math.atan2(dy, dx); // range: -32768..32768, div/mod
+			ctx.save();	
+			ctx.translate(x0, y0);
+			ctx.rotate(angle);
+			for(let x = 0; x < dist; x++) {
+				const y = Math.sin(x / wavelength * Math.PI * 2) * amp;
+				ctx.lineTo(x, -y);
+			}
+			ctx.save();
+			ctx.stroke();
+		}
+
+		// 画现两点之间的正弦波
+		sinewave(0, 0, 700, 500, 50, 40);
+
+	</script>
+</body>
+</html>

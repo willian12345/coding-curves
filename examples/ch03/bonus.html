@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="../include/style.css"/>
+</head>
+<body>
+	<canvas width="600" height="600" id="canvas"></canvas>
+	<script type="text/javascript">
+		const canvas = document.getElementById('canvas');
+		const ctx = canvas.getContext('2d');
+
+		ctx.lineCap = 'round';
+		function circle(x,y,r){
+			const res = 4 / r;
+			const x1 = x +  Math.cos(0) * r;
+			const y1 = y + Math.sin(0) * r;
+			ctx.moveTo(x1, y1);
+			for(let t = 0; t < Math.PI * 2; t += res) {
+				const x1 = x +  Math.cos(t) * r;
+				const y1 = y + Math.sin(t) * r;
+				ctx.lineTo(x1, y1);
+			}
+			ctx.closePath();
+		}
+
+		const cx = 300;
+		const cy = 300;
+		const res = (Math.PI * 2) / 20; // 一个圆周期上分布 20 个
+		for (let t = 0; t <= Math.PI * 2; t += res) {
+			const x = cx + Math.cos(t) * 200;
+			const y = cy + Math.sin(t)	*200;
+			circle(x, y, 20);
+			ctx.stroke();
+		}
+	</script>
+</body>
+</html>

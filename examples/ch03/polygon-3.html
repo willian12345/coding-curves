@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="../include/style.css"/>
+</head>
+<body>
+	<canvas width="600" height="600" id="canvas"></canvas>
+	<script type="text/javascript">
+		const canvas = document.getElementById('canvas');
+		const ctx = canvas.getContext('2d');
+		const width = 600;
+		const height = 600;
+		ctx.lineCap = 'round';
+		ctx.fillStyle = 'white';
+		ctx.strokeStyle = '999';
+
+		function polygon(x, y, radius, sides, rotation){
+			const res = (Math.PI * 2) / sides;
+			// 新画一个多边形起始位置需要用 moveTo 跳过来
+			const x1 = x +  Math.cos(rotation) * radius;
+			const y1 = y + Math.sin(rotation) * radius;
+			ctx.moveTo(x1, y1);
+
+			for(let i = 0; i < Math.PI * 2; i += res) {
+				const x1 = x +  Math.cos(i + rotation) * radius;
+				const y1 = y + Math.sin(i + rotation) * radius;
+				ctx.lineTo(x1, y1);
+			}
+			ctx.closePath();
+			// 填充白色，最后效果好看一点点
+			ctx.fill();
+		}
+
+		// 循环出多个大小与旋转角度相对稍稍有偏移的多个5边形
+		let angle = 0;
+		for (let r = 5; r <= 255; r += 10) {
+			polygon(300, 300, r, 5, angle);	
+			ctx.stroke();
+			angle += 0.05;
+		}
+	</script>
+</body>
+</html>

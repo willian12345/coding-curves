@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../include/style.css" />
+  </head>
+  <body>
+    <canvas width="800" height="800" id="canvas"></canvas>
+    <script type="text/javascript">
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      const width = 800;
+      const height = 800;
+      const cx = width / 2;
+      const cy = height / 2;
+      const radius = 250;
+      ctx.lineCap = "round";
+      ctx.strokeStyle = "#999";
+
+      function circle(x, y, r) {
+        const res = 4 / r;
+        ctx.beginPath();
+        for (let t = 0; t < Math.PI * 2; t += res) {
+          const x1 = x + Math.cos(t) * r;
+          const y1 = y + Math.sin(t) * r;
+          ctx.lineTo(x1, y1);
+        }
+        ctx.closePath();
+      }
+
+      function disk(x, y, radius, speed, phase) {
+        return {
+          x,
+          y,
+          radius,
+          speed,
+          phase,
+        };
+      }
+
+      let t = 0;
+      const d0 = disk(100, 200, 100, 2, 0.5);
+      const d1= disk(400, 200, 60, 3, 0.0);
+
+      let d = 0.1;
+      function loop() {
+        d += 0.01;
+        ctx.clearRect(0, 0, 800, 800);
+
+        circle(d0.x, d0.y, d0.radius);
+        ctx.stroke();
+        x0 = d0.x + Math.cos(t * d0.speed + d0.phase) * d0.radius;
+        y0 = d0.y + Math.sin(t * d0.speed + d0.phase) * d0.radius;
+        circle(x0, y0, 4);
+        ctx.fill();
+
+        circle(d1.x, d1.y, d1.radius);
+        ctx.stroke();
+        x1 = d1.x + Math.cos(t * d1.speed + d1.phase) * d1.radius;
+        y1 = d1.y + Math.sin(t * d1.speed + d1.phase) * d1.radius;
+        circle(x1, y1, 4);
+        ctx.fill();
+
+        t += 0.1;
+        requestAnimationFrame(loop);
+      }
+
+      requestAnimationFrame(loop);
+    </script>
+  </body>
+</html>
+  

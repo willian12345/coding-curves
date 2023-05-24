@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="../include/style.css"/>
+</head>
+<body>
+	<canvas width="600" height="600" id="canvas"></canvas>
+	<script type="text/javascript">
+		const canvas = document.getElementById('canvas');
+		const ctx = canvas.getContext('2d');
+		const width = 600;
+		const height = 600;
+		const cx = width/2;
+		const cy = height/2;
+		const radius = 250;
+		ctx.lineCap = 'round';
+		function arc(x,y,r, start, end, anticlockwise){
+			if(anticlockwise){
+				temp = start;
+				start = end; 
+				end = temp;
+			}
+			while(end<start){
+				end+= 2 * Math.PI;
+			}
+			const res = 4 / r;
+			for(let t = start; t < end; t += res) {
+				const x1 = x +  Math.cos(t) * r;
+				const y1 = y + Math.sin(t) * r;
+				ctx.lineTo(x1, y1);
+			}
+			
+			// 为更精确，最后一个 t 有可能会小于 end
+			const x1 = x +  Math.cos(end) * r;
+			const y1 = y + Math.sin(end) * r;
+			ctx.lineTo(x1, y1);
+		}
+		arc(cx, cy, radius, .5, 3.5, true);
+		ctx.stroke();
+	</script>
+</body>
+</html>

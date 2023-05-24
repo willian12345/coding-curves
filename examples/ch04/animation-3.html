@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="../include/style.css"/>
+</head>
+<body>
+	<canvas width="600" height="600" id="canvas"></canvas>
+	<script type="text/javascript">
+		const canvas = document.getElementById('canvas');
+		const ctx = canvas.getContext('2d');
+		const width = 600;
+		const height = 600;
+		const cx = width/2;
+		const cy = height/2;
+		const radius = 250;
+		ctx.lineCap = 'round';
+		function circle(x,y,r){
+			const res = 4 / r;
+			ctx.beginPath();
+			for(let t = 0; t < Math.PI * 2; t += res) {
+				const x1 = x +  Math.cos(t) * r;
+				const y1 = y + Math.sin(t) * r;
+				ctx.lineTo(x1, y1);
+			}
+			ctx.closePath();
+		}
+
+		let t = 0;
+		function loop (){
+			ctx.clearRect(0,0, 600, 600);
+			circle(300 + Math.cos(t) * 100, 300 + Math.sin(t) * 100, 20);
+			ctx.stroke();	
+			ctx.fill();
+			t += 0.1;
+			requestAnimationFrame(loop)
+		}
+
+		requestAnimationFrame(loop)
+		
+		
+	</script>
+</body>
+</html>
