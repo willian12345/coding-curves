@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../include/style.css" />
+  </head>
+  <body>
+    <canvas width="800" height="800" id="canvas"></canvas>
+    <script type="text/javascript">
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      const width = 800;
+      const height = 800;
+      function center() {
+        ctx.translate(width / 2, height / 2);
+      }
+      function drawAxes() {
+        ctx.lineWidth = 0.25;
+        ctx.moveTo(-width, 0);
+        ctx.lineTo(width, 0);
+        ctx.moveTo(0, -height);
+        ctx.lineTo(0, height);
+        ctx.stroke();
+        ctx.lineWidth = 1;
+      }
+      center();
+      ctx.scale(1, -1);
+      drawAxes();
+      
+      const a = 0.003;
+      ctx.beginPath();
+      for (x = -width / 2; x <= width / 2; x++) {
+        const y = a * x * x;
+        ctx.lineTo(x, y)
+      }
+      ctx.stroke();
+    </script>
+  </body>
+</html>
