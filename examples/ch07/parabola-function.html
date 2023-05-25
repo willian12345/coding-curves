@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../include/style.css" />
+  </head>
+  <body>
+    <canvas width="800" height="800" id="canvas"></canvas>
+    <script type="text/javascript">
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      const width = 800;
+      const height = 800;
+
+      function circle(x, y, r) {
+        const res = 4 / r;
+        ctx.beginPath();
+        for (let t = 0; t < Math.PI * 2; t += res) {
+          const x1 = x + Math.cos(t) * r;
+          const y1 = y + Math.sin(t) * r;
+          ctx.lineTo(x1, y1);
+        }
+      }
+
+      function center() {
+        ctx.translate(width / 2, height / 2);
+      }
+
+      function drawAxes() {
+        ctx.beginPath();
+        ctx.lineWidth = 0.25;
+        ctx.moveTo(-width, 0);
+        ctx.lineTo(width, 0);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(0, -height);
+        ctx.lineTo(0, height);
+        ctx.stroke();
+        ctx.lineWidth = 1;
+      }
+      // 坐标轴
+      center();
+      ctx.scale(1, -1);
+      drawAxes();
+
+
+      // 抛物线函数
+      function parabola(a, b, c, x0, x1) {
+        for (let x = x0; x <= x1; x++) {
+          const y = a*x*x + b*x + c;
+          ctx.lineTo(x, y);
+        }
+      }
+
+      ctx.beginPath();
+      parabola(0.01, 0, 0, -width/2, width/2);
+      ctx.stroke();
+    </script>
+  </body>
+</html>
