@@ -40,13 +40,18 @@
       const res = 0.025;
 
       function loop() {
+        ctx.beginPath(); 
         ctx.clearRect(0,0, 800, 800);
-        const { x, y } = quadBezierPoint(x0, y0, x1, y1, x2, y2, finalT);
 
+        const { x, y } = quadBezierPoint(x0, y0, x1, y1, x2, y2, finalT);
         circle(x, y, 4);
         ctx.fill();
 
-        // quadraticCurveTo
+        // 调用 canvas 内置的 quadraticCurveTo 创建路径
+        ctx.beginPath();
+        ctx.moveTo(x0, y0);
+        ctx.quadraticCurveTo(x1, y1, x2, y2)
+        ctx.stroke();
         
         finalT += dt;
         if (finalT > 1) {
