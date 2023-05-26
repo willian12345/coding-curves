@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../include/style.css" />
+  </head>
+  <body>
+    <canvas width="800" height="800" id="canvas"></canvas>
+    <script type="text/javascript">
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      const width = 800;
+      const height = 800;
+      function quadBezierPoint(x0, y0, x1, y1, x2, y2, t) {
+        m = 1 - t;
+        a = m * m;
+        b = 2 * m * t;
+        c = t * t;
+        x = a * x0 + b * x1 + c * x2;
+        y = a * y0 + b * y1 + c * y2;
+        return { x, y };
+      }
+      // function quadCurve(x0, y0, x1, y1, x2, y2, res) {
+      //   ctx.moveTo(x0, y0);
+      //   for (t = res; t < 1; t += res) {
+      //     const { x, y } = quadBezierPoint(x0, y0, x1, y1, x2, y2, t);
+      //     ctx.lineTo(x, y);
+      //   }
+      //   ctx.lineTo(x2, y2);
+      // }
+      const x0 = 50;
+      const y0 = 50;
+      const x1 = 150;
+      const y1 = 360;
+      const x2 = 360;
+      const y2 = 150;
+      let  finalT = 0;
+      let dt = 0.01;
+      const res = 0.025;
+
+      function loop (){
+        ctx.clearRect(0,0, 800, 800);
+        ctx.beginPath();
+        ctx.moveTo(x0, y0)
+        for (let t = res; t < finalT; t += res) {
+          const { x, y } = quadBezierPoint(x0, y0, x1, y1, x2, y2, t)
+          ctx.lineTo(x, y)
+        }
+        ctx.stroke()
+      
+        // 添加到 finalT
+        finalT += dt
+      
+        // 超过 1 则反向
+        if (finalT > 1) {
+          finalT = 1
+          dt = -dt
+        } else if (finalT < 0) {
+          // 如果小于 0 再将反向
+          finalT = 0
+          dt = -dt
+        }
+        requestAnimationFrame(loop)
+      }
+
+      requestAnimationFrame(loop)
+    </script>
+  </body>
+</html>
