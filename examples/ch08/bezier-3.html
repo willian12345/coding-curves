@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../include/style.css" />
+  </head>
+  <body>
+    <canvas width="800" height="800" id="canvas"></canvas>
+    <script type="text/javascript">
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      const width = 800;
+      const height = 800;
+
+      function randomPoint(x, y, width, height){
+        return {
+          x: x + Math.random() * width,
+          y: x + Math.random() * height
+        }
+      }
+
+      function multiCurve(points) {
+        // line from the first point to the first midpoint.
+        // 连接第一个点到第一个中间点
+        ctx.moveTo(points[0].x, points[0].y)
+        const midX = (points[0].x + points[1].x) / 2
+        const midY = (points[0].y + points[1].y) / 2
+        ctx.lineTo(midX, midY)
+        // 循环数组，index 从 1 开始至倒数第二个点结束
+        // （译者注：注意这循环内的最开始的 p0 其实是数组中的第二个点了）
+        for (i = 1; i < points.length - 1; i++) {
+          const p0 = points[i]
+          const p1 = points[i+1]
+          const midX = (p0.x + p1.x) / 2
+          const midY = (p0.y + p1.y) / 2
+          // 从下一个点开始绘制二阶曲线至中间点
+          ctx.quadraticCurveTo(p0.x, p0.y, midX, midY)
+        }
+        // 连接最后一个中间点到结束点。
+        const p = points[points.length - 1]
+        ctx.lineTo(p.x, p.y)
+      }
+
+      const points = []
+      for (i = 0; i < 6; i++) {
+        points.push(randomPoint(0, 0, 800, 800))
+      }
+      
+      multiCurve(points)
+      ctx.stroke()
+      
+    </script>
+  </body>
+</html>

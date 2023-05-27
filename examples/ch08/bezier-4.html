@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../include/style.css" />
+  </head>
+  <body>
+    <canvas width="800" height="800" id="canvas"></canvas>
+    <script type="text/javascript">
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      const width = 800;
+      const height = 800;
+
+      function randomPoint(x, y, width, height){
+        return {
+          x: x + Math.random() * width,
+          y: x + Math.random() * height
+        }
+      }
+
+      function multiLoop(points) {
+      // find the first midpoint and move to it.
+      // we'll keep this around for later
+      // 找到最开始的那个中间点，将绘制点移至此点。
+      // 先存下来后面会用到
+      const midX0 = (points[0].x + points[1].x) / 2
+      const midY0 = (points[0].y + points[1].y) / 2
+      ctx.moveTo(midX0, midY0)
+    
+      // the for loop doesn't change
+      // 循环和之前一样不用变
+      for (i = 1; i < points.length - 1; i++) {
+        const p0 = points[i]
+        const p1 = points[i+1]
+        const midX = (p0.x + p1.x) / 2
+        const midY = (p0.y + p1.y) / 2
+        ctx.quadraticCurveTo(p0.x, p0.y, midX, midY)
+      }
+    
+      // we'll be left at the last midpoint
+      // find the midpoint between the last and first points
+      // 找到数组首尾间的中间点
+      const p = points[points.length - 1]
+      const midX1 = (p.y + points[0].x) / 2
+      const midY1 = (p.y + points[0].y) / 2
+    
+      // curve through the last point to that new midpoint
+      // 将最后一个点与首尾中间点相连
+      ctx.quadraticCurveTo(p.x, p.y, midX1, midY1)
+    
+      // then curve through the first point to that first midpoint you saved earlier
+      // 然后再将数组第一个点与早前我们保存的第一个中间点连接
+      ctx.quadraticCurveTo(points[0].x, points[0].y, midX0, midY0)
+    }
+
+      const points = []
+      for (i = 0; i < 6; i++) {
+        points.push(randomPoint(0, 0, 800, 800))
+      }
+      
+      multiLoop(points)
+      ctx.stroke()
+      
+    </script>
+  </body>
+</html>
