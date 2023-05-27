@@ -15,7 +15,6 @@
       const height = 800;
 
       function circle(x, y, r) {
-        ctx.moveTo(x, y);
         ctx.arc(x, y, r, 0 , Math.PI * 2);
       }
 
@@ -30,6 +29,10 @@
         return { x, y };
       }
 
+      function roundByM(number, m){ 
+        return Math.round(Math.pow(10, m) * number) / Math.pow(10, m)
+      } 
+
       const x0 = 100;
       const y0 = 700;
       const x1 = 100;
@@ -41,14 +44,14 @@
       ctx.moveTo(x0, y0)
       ctx.quadraticCurveTo(x1, y1, x2, y2)
       ctx.stroke()
-      
-      // 20 evenly spaced t values (21 counting the end one)
-      // 20 个平均分布的坑（算上最后一个的话是 21 个）
-      for (let t = 0; t <= 1; t += 0.05) {
+      // 
+      // 译者注：javascript 精度问题会与原作者说的结果有出入, 所以用 roundByM 取
+      for (let t = 0; t <= 1; t = roundByM(t + 0.05, 2)) {
         const {x, y} = quadBezierPoint(x0, y0, x1, y1, x2, y2, t)
         ctx.beginPath();
         circle(x, y, 6)
         ctx.fill();
+        
       }
       
     </script>

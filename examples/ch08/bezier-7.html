@@ -35,7 +35,8 @@
         return { x, y };
       }
 
-      function quadBezLength(x0, y0, x1, y1, x2, y2, count) {
+      // 译者注：返回采所有样点递增的所有长度数组
+      function quadBezLengths(x0, y0, x1, y1, x2, y2, count) {
         const lengths = [];
         let length = 0;
         const dt = 1 / count;
@@ -47,7 +48,6 @@
           lengths.push(length)
           x = xn;
           y = yn;
-          console.log(xn, yn)
         }
         length += distance(x, y, x2, y2)
         lengths.push(length)
@@ -66,8 +66,37 @@
       ctx.quadraticCurveTo(x1, y1, x2, y2)
       ctx.stroke()
 
-      const r = quadBezLength(x0, y0, x1, y1, x2, y2, 500);
-      console.log(r)
+      const count = 500
+      const lengths = quadBezLengths(x0, y0, x1, y1, x2, y2, count)
+      const length = lengths[count-1]
+      
+      for (let i = 0.0; i <= 1; i += 0.05) {
+        // the length of the curve up to the next point
+        // 曲线上下一个目标点的长度
+        const targetLength = i * length
+        // loop through the array until the length is higher than the target length
+        // 循环数组直到 length 高于目标长度
+        // 译者注：外循环是将曲线当成直线总长度 length 均分成 20 份的
+        // 内循环由于得到的采样曲线长度是非均分的，所以需要从数组向后找相当于一点点小心的累加像素直到满足均分条件，再进入下一次寻找
+        for (j = 0; j < 500; j++) {
+          if (lengths[j] > targetLength) {
+            // t is now the percentage of the way we got through the array.
+            // this is the t value we need to get the next point
+            // t 现在是数组的百分比
+            // 这是下一个点的 t 值
+            const  t = j / count
+      
+            // get the point and draw the next circle.
+            // 获取下一个点，并绘制圆。
+            const {x, y} = quadBezierPoint(x0, y0, x1, y1, x2, y2, t)
+            ctx.beginPath();
+            circle(x, y, 6)
+            ctx.fill();
+            break
+          }
+        }
+      }
+      
     </script>
   </body>
 </html>
