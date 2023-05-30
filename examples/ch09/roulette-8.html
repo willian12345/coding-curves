@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../include/style.css" />
+  </head>
+  <body>
+    <canvas width="800" height="800" id="canvas"></canvas>
+    <script type="text/javascript">
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      const width = 800;
+      const height = 800;
+
+      function circle(x, y, r) {
+        ctx.arc(x, y, r, 0 , Math.PI * 2);
+      }
+      //（译者注： gcd 即 greatest common divisor 求最大公约数）
+      function gcd(x, y) {
+        let result = Math.min(x, y);
+        while (result > 0) {
+          if (x % result == 0 && y % result == 0) {
+            break
+          }
+          result--
+        }
+        return result
+      }
+      
+      function simplify(x, y) {
+        g = gcd(x, y)
+        return [x / g, y / g]
+      }
+
+      ctx.translate(width / 2, height / 2);
+
+      const r0 = 160
+      const r1 = 80
+      const d = 80
+      const res = 0.01
+      const [num, den] = simplify(r0, r1)
+      
+      ctx.beginPath();
+      for (let t = 0.0; t < Math.PI * 2 * den; t += res) {
+        const x = (r0 + r1) * Math.cos(t) - d * Math.cos(((r0 + r1) * t) / r1)
+        const y = (r0 + r1) * Math.sin(t) - d * Math.sin(((r0 + r1) * t) / r1)    
+        ctx.lineTo(x, y)
+      }
+      ctx.stroke();
+    </script>
+  </body>
+</html>

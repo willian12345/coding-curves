@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../include/style.css" />
+  </head>
+  <body>
+    <canvas width="800" height="800" id="canvas"></canvas>
+    <script type="text/javascript">
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      const width = 800;
+      const height = 800;
+      ctx.translate(0, height / 2);
+      ctx.scale(1, -1);
+      ctx.moveTo(0, 0);
+      ctx.lineTo(width, 0);
+      ctx.stroke();
+
+      const a = 20;
+      const b = 20;
+      const res = 0.05;
+
+      ctx.beginPath();
+      for (let t = 0; t < width; t += res) {
+        const x = a * t - b * Math.sin(t);
+        const y = a - b * Math.cos(t);
+        ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    </script>
+  </body>
+</html>
