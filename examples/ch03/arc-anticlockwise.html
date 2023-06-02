@@ -19,11 +19,9 @@
 		ctx.lineCap = 'round';
 		function arc(x,y,r, start, end, anticlockwise){
 			if(anticlockwise){
-				temp = start;
-				start = end; 
-				end = temp;
+				[end, start] = [start, end]
 			}
-			while(end<start){
+			while(end < start){
 				end+= 2 * Math.PI;
 			}
 			const res = 4 / r;
