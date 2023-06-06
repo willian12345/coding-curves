@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../include/style.css" />
+  </head>
+  <body>
+    <canvas width="800" height="800" id="canvas"></canvas>
+    <script type="text/javascript">
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      const width = 800;
+      const height = 800;
+      
+      function rose(x, y, a, n) {
+        for (let t = 0; t < 2 * Math.PI; t += 0.01) {
+          const r = a * Math.sin(n * t)
+          ctx.lineTo(x + Math.cos(t) * r, y + Math.sin(t) * r)
+        }
+      }
+
+      rose(width / 2, height / 2, width * 0.45, 7)
+      ctx.stroke()
+    </script>
+  </body>
+</html>
