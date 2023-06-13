@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../include/style.css" />
+  </head>
+  <body>
+    <canvas width="800" height="800" id="canvas"></canvas>
+    <script type="text/javascript">
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      const width = 800;
+      const height = 800;
+
+      function fermat(a, t) {
+        const r = a * Math.pow(t, 0.5);
+        return r;
+      }
+
+      ctx.translate(width / 2, height / 2);
+
+      const cycles = 50;
+      const res = 0.01;
+
+      for (let t = res; t < 2 * Math.PI * cycles; t += res) {
+        const r = fermat(15, t);
+        const x = Math.cos(t) * r;
+        const y = Math.sin(t) * r;
+        ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    </script>
+  </body>
+</html>
