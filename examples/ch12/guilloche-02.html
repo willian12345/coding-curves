@@ -16,20 +16,33 @@
       function center() {
         ctx.translate(width / 2, height / 2);
       }
-      const inner = 50
-      const outer = 250
-      const range = (outer - inner) * 0.5
-      const mid = inner + range;
-      const nodes = 80
-      const div = 11
+      
+      const inner = 100;
+      const n0 = 7;
+      const h0 = 10;
+      
+      const outer = 250;
+      const n1 = 17;
+      const h1 = 20;
+      
+      const nodes = 142;
+      const div = 89;
+
       center() 
       ctx.beginPath();
       for (let t = 0; t < 2 * Math.PI * div; t += 0.01) {
+        const r0 = inner + Math.sin(t * n0) * h0
+        const r1 = outer + Math.sin(t * n1) * h1
+      
+        const range = (r1 - r0) * 0.5
+        const mid = r0 + range
+      
         const radius = mid + Math.sin(t * nodes / div) * range
         const x = Math.cos(t) * radius
         const y = Math.sin(t) * radius
         ctx.lineTo(x, y)
       }
+
       ctx.stroke()
       
     </script>

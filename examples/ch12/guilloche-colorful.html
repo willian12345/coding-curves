@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../include/style.css" />
+  </head>
+  <body>
+    <canvas width="800" height="800" id="canvas"></canvas>
+    <script type="text/javascript">
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      const width = 800;
+      const height = 800;
+
+      function randomColor() {
+        return `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${
+          Math.floor(Math.random() * 255)
+        })`;
+      }
+
+      function guilloche(x, y, ir, n0, h0, or, n1, h1, nodes, div) {
+        ctx.strokeStyle = randomColor();
+        for (let t = 0; t < 2 * Math.PI * div; t += 0.01) {
+          const r0 = ir + Math.sin(t * n0) * h0;
+          const r1 = or + Math.sin(t * n1) * h1;
+
+          const range = (r1 - r0) * 0.5;
+          const mid = r0 + range;
+
+          const radius = mid + Math.sin((t * nodes) / div) * range;
+          ctx.lineTo(x + Math.cos(t) * radius, y + Math.sin(t) * radius);
+        }
+        ctx.stroke();
+      }
+
+      ctx.beginPath();
+      guilloche(400, 400, 50, 6, 10, 120, 12, 20, 137, 37);
+
+      ctx.beginPath();
+      guilloche(400, 400, 120, 12, 20, 220, 18, 30, 141, 41);
+
+      ctx.beginPath();
+      guilloche(400, 400, 220, 18, 30, 350, 24, 20, 164, 53);
+    </script>
+  </body>
+</html>
