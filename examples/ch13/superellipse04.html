@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>superellipse</title>
+</head>
+<body>
+  <canvas width="600" height="400" id="canvas"></canvas>
+  <script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    const width = 600;
+    const height = 400;
+    function sign(val) {
+      if (val < 0) {
+        return -1
+      }
+      if (val > 0) {
+        return 1
+      }
+      return 0
+    }
+    function superellipse(xc, yc, rx, ry, n) {
+      for (let t = 0; t < Math.PI * 2; t += 0.01) {
+        const c = Math.cos(t)
+        const s = Math.sin(t)
+        const x = Math.pow(Math.abs(c), 2 / n) * rx * sign(c)
+        const y = Math.pow(Math.abs(s), 2 / n) * ry * sign(s)
+        ctx.lineTo(xc + x, yc + y)
+      }
+      ctx.closePath()
+    }
+
+
+    ctx.fillStyle = '#ff7f00';
+    superellipse(300, 200, 150, 150, 10)
+    ctx.fill()
+  </script>
+</body>
+</html>
