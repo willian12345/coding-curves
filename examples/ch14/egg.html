@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>superellipse</title>
+</head>
+<body>
+  <canvas width="600" height="600" id="canvas"></canvas>
+  <script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    const width = 600;
+    const height = 600;
+
+    function egg(xc, yc, rx, ry) {
+      for (let t = 0; t < 2 * Math.PI; t += 0.01) {
+        const x = Math.cos(t)
+        let y = Math.sin(t)
+        y *= (1 + 0.2 * x)
+        ctx.lineTo(xc + x * rx, yc + y * ry)
+      }
+      ctx.closePath()
+    }
+    
+    egg(300, 300, 280, 190)
+    ctx.stroke()
+  </script>
+</body>
+</html>
